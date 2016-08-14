@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- namespace指定本xml文件对应的mapper类，并不是实体类 -->
+<mapper namespace="com.bj.mybatis.mapper.java.EmpMapper">
+
+	<select id="getEmpByDeptId" parameterType="int" resultType="Emp">
+		SELECT * FROM tbl_emp where deptId=#{id}
+	</select>
+ 
+</mapper>

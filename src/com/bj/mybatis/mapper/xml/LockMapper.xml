@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- namespace指定本xml文件对应的mapper类，并不是实体类 -->
+<mapper namespace="com.bj.mybatis.mapper.java.LockMapper">
+
+	<!-- 第一种方法： 在指定javaType的情况下可以使用property来指定-->
+	<!-- 
+		 <association property="key" javaType="com.atguigu.mybatis.entities.Key">
+			<id property="id" column="id"/>
+			<result property="keyName" column="keyName"/>
+		 </association>
+	 -->
+	<!-- 第二种方法  当指定列名时，使用select来选择 -->
+	<resultMap type="com.bj.mybatis.entity.Lock" id="resultLockMap">
+		<id property="id" column="id"/>
+		<id property="lockName" column="lockName"/>
+		<!-- 在此记得加上
+			javaType 为 property 的类型 
+			column : 为查询中传递参数的列名
+		 -->
+		<association property="key" column="key_id" 
+			javaType="com.bj.mybatis.entity.Key"  
+			select="com.bj.mybatis.mapper.java.KeyMapper.getKeyById"/>
+	</resultMap>
+
+	<select id="getLockById" parameterType="Integer" resultMap="resultLockMap">
+		select * from tbl_lock
+	</select>
+	
+</mapper>

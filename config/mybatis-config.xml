@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+<configuration>
+
+	<!-- 引入外部文件 -->
+	<properties resource="db.properties"></properties>
+	
+	<!-- <settings>
+		<setting name="lazyLoadingEnabled"       value="true"/>
+		<setting name="aggressiveLazyLoading"    value="false"/>  
+	</settings> -->
+	
+	<typeAliases>
+        <typeAlias type="com.bj.mybatis.entity.Student"  alias="Student" />
+        <typeAlias type="com.bj.mybatis.entity.Key"  alias="Key" />
+        <typeAlias type="com.bj.mybatis.entity.Lock"  alias="Lock" />
+        <typeAlias type="com.bj.mybatis.entity.Dept"  alias="Dept" />
+        <typeAlias type="com.bj.mybatis.entity.Emp"  alias="Emp" />
+    </typeAliases>
+    
+    <!-- 一定不能忘了写default连接，否则会找不到默认的连接 -->
+	<environments default="c3p0">
+		<environment id="c3p0">
+			<transactionManager type="JDBC"></transactionManager>
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driverClass}" />
+				<property name="url" value="${jdbc.jdbcUrl}" />
+				<property name="username" value="${jdbc.user}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<!-- 指定xml文件 -->
+		<mapper resource="com/bj/mybatis/mapper/xml/StudentMapper.xml"/>
+		<mapper resource="com/bj/mybatis/mapper/xml/KeyMapper.xml"/>
+		<mapper resource="com/bj/mybatis/mapper/xml/LockMapper.xml"/>
+		<mapper resource="com/bj/mybatis/mapper/xml/DeptMapper.xml"/>
+		<mapper resource="com/bj/mybatis/mapper/xml/EmpMapper.xml"/>
+		<!-- 
+			指定Annotation的Java类
+			<mapper  class=""/>
+		 -->
+	</mappers>
+	
+</configuration>

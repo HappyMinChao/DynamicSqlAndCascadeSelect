@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- namespace指定本xml文件对应的mapper类，并不是实体类 -->
+<mapper namespace="com.bj.mybatis.mapper.java.DeptMapper">
+	
+	<resultMap type="com.bj.mybatis.entity.Dept" id="DeptResultMap">
+		<!-- 注意一定要使用id， 否则会出现很严重的性能问题， 虽然不会出错 -->
+		<id property="id" column="id"/>
+		<result property="deptName" column="deptName"/>
+		<!-- 在此记得加上
+			javaType 为 property 的类型  在此为List
+			ofType : 为List中的泛型类型
+			column : 为查询中传递参数的列名， 本表(tbl_dept)中的id  传递给select方法的参数
+					 但是传过去的是部门id， 所以查询应实现通过部门id获取所有的Emp，所以应该调用getEmpByDeptId
+			column:在dept表中没有， ORM框架在表中没有，可以找类啊，通过类来查找出id反注入到column中进行查询
+		 -->
+		<collection property="emps" 
+					javaType="List"
+					ofType="com.bj.mybatis.entity.Emp" 
+					column="id"
+					select="com.bj.mybatis.mapper.java.EmpMapper.getEmpByDeptId"
+		></collection>
+	</resultMap>
+	
+	<select id="getDeptById" parameterType="Integer" resultMap="DeptResultMap">
+		SELECT * FROM tbl_dept where id=#{id}
+	</select>
+ 
+</mapper>
